@@ -52,19 +52,19 @@ template<typename... Ts> class SetFrequencyAction : public Action<Ts...> {
   LEDCOutput *parent_;
 };
 
-struct SongActionItem {
-  SongActionItem(float frequency, uint32_t end_at) : frequency(frequency), end_at(end_at) {}
+struct MelodyActionItem {
+  SonMelodyActionItem(float frequency, uint32_t end_at) : frequency(frequency), end_at(end_at) {}
 
   // Frequency to play, 0 for space
   float frequency;
   uint32_t end_at;
 };
 
-template<typename... Ts> class SongAction : public Action<Ts...>, public Component {
+template<typename... Ts> class MelodyAction : public Action<Ts...>, public Component {
  public:
-  SongAction(LEDCOutput *parent) : parent_(parent) {}
+  MelodyAction(LEDCOutput *parent) : parent_(parent) {}
   void set_active_level(float active_level) { active_level_ = active_level; }
-  void set_items(const std::vector<SongActionItem> &items) { items_ = items; }
+  void set_items(const std::vector<MelodyActionItem> &items) { items_ = items; }
 
   void play(Ts... x) {
     // empty, complex action
@@ -132,7 +132,7 @@ template<typename... Ts> class SongAction : public Action<Ts...>, public Compone
   LEDCOutput *parent_;
   float active_level_;
   size_t at_;
-  std::vector<SongActionItem> items_;
+  std::vector<MelodyActionItem> items_;
   std::tuple<Ts...> var_{};
 };
 

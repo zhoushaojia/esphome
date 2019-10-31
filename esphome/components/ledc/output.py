@@ -36,8 +36,8 @@ def validate_frequency(value):
 ledc_ns = cg.esphome_ns.namespace('ledc')
 LEDCOutput = ledc_ns.class_('LEDCOutput', output.FloatOutput, cg.Component)
 SetFrequencyAction = ledc_ns.class_('SetFrequencyAction', automation.Action)
-SongAction = ledc_ns.class_('SongAction', automation.Action, cg.Component)
-SongActionItem = ledc_ns.class_('SongActionItem')
+MelodyAction = ledc_ns.class_('MelodyAction', automation.Action, cg.Component)
+MelodyActionItem = ledc_ns.class_('MelodyActionItem')
 
 CONFIG_SCHEMA = output.FLOAT_OUTPUT_SCHEMA.extend({
     cv.Required(CONF_ID): cv.declare_id(LEDCOutput),
@@ -84,8 +84,7 @@ NOTES = {
     'G#': 8, 'AB': 8,
     'A': 9,
     'A#': 10, 'Bb': 10,
-    # also allow BACH motif (B will be ambiguous, but ok)
-    'B': 11, 'H': 11,
+    'B': 11,
 }
 
 NOTE_PATTERN = r'^([{}])\s*([0-9]*)$'.format(r'|'.join(NOTES))
@@ -162,7 +161,7 @@ def validate_pattern_item(value):
     raise cv.Invalid("At least one key of [frequency], [note], [space] is required!")
 
 
-@automation.register_action('output.ledc.song', SongAction, cv.Schema({
+@automation.register_action('output.ledc.melody', SongAction, cv.Schema({
     cv.Required(CONF_ID): cv.use_id(LEDCOutput),
     cv.Required(CONF_PATTERN): [validate_pattern_item],
     cv.Optional(CONF_ACTIVE_LEVEL, default='50%'): cv.percentage,

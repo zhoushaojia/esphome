@@ -748,6 +748,97 @@ binary_sensor:
       - output.ledc.set_frequency:
           id: gpio_19
           frequency: !lambda 'return 500.0;'
+      - output.ledc.melody:
+          id: gpio_19
+          active_level: 50%
+          beats_per_minute: 30
+          pattern:
+            # 1st
+            - {note: G, duration: 1/4}
+            - {note: G, duration: 1/4}
+            - {note: G, duration: 1/4}
+            - {note: E, duration: 3/16}
+            - {note: Bb, duration: 1/16}
+
+            - {note: G, duration: 1/4}
+            - {note: E, duration: 3/16}
+            - {note: Bb, duration: 1/16}
+            - {note: G, duration: 1/2}
+
+            - {note: D5, duration: 1/4}
+            - {note: D5, duration: 1/4}
+            - {note: D5, duration: 1/4}
+            - {note: Eb5, duration: 3/16}
+            - {note: Bb, duration: 1/16}
+
+            # 2nd
+            - {note: Gb, duration: 1/4}
+            - {note: E, duration: 3/16}
+            - {note: Bb, duration: 1/16}
+            - {note: G, duration: 1/2}
+
+            - {note: G5, duration: 1/4}
+            - {note: G, duration: 3/16}
+            - {note: G, duration: 1/16}
+            - {note: G5, duration: 1/4}
+            - {note: Gb5, duration: 3/16}
+            - {note: F5, duration: 1/16}
+
+            - {note: E5, duration: 1/16}
+            - {note: D#5, duration: 1/16}
+            - {note: E5, duration: 1/8}
+            - {space: 1/8}
+            - {note: G#, duration: 1/8}
+            - {note: C#5, duration: 1/4}
+            - {note: B#, duration: 3/16}
+            - {note: B, duration: 1/16}
+
+            # 3rd
+            - {note: Bb, duration: 1/16}
+            - {note: A, duration: 1/16}
+            - {note: Bb, duration: 1/8}
+            - {space: 1/8}
+            - {note: E, duration: 1/8}
+            - {note: Gb, duration: 1/4}
+            - {note: E, duration: 3/16}
+            - {note: Gb, duration: 1/16}
+
+            - {note: Bb, duration: 1/4}
+            - {note: G, duration: 3/16}
+            - {note: Bb, duration: 1/16}
+            - {note: D5, duration: 1/2}
+
+            - {note: G5, duration: 1/4}
+            - {note: G, duration: 3/16}
+            - {note: G, duration: 1/16}
+            - {note: G5, duration: 1/4}
+            - {note: Gb5, duration: 3/16}
+            - {note: F5, duration: 1/16}
+
+            # 4th
+            - {note: E5, duration: 1/16}
+            - {note: D#5, duration: 1/16}
+            - {note: E5, duration: 1/8}
+            - {space: 1/8}
+            - {note: G#, duration: 1/8}
+            - {note: C#5, duration: 1/4}
+            - {note: B#, duration: 3/16}
+            - {note: B, duration: 1/16}
+
+            - {note: Bb, duration: 1/16}
+            - {note: A, duration: 1/16}
+            - {note: Bb, duration: 1/8}
+            - {space: 1/8}
+            - {note: E, duration: 1/8}
+            - {note: Gb, duration: 1/4}
+            - {note: E, duration: 3/16}
+            - {note: Bb, duration: 1/16}
+
+            - {note: G, duration: 1/4}
+            - {note: E, duration: 3/16}
+            - {note: Bb, duration: 1/16}
+            - {note: G, duration: 1/2}
+
   - platform: pn532
     uid: 74-10-37-94
     name: "PN532 NFC Tag"
