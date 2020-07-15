@@ -161,7 +161,7 @@ def validate_pattern_item(value):
     raise cv.Invalid("At least one key of [frequency], [note], [space] is required!")
 
 
-@automation.register_action('output.ledc.melody', SongAction, cv.Schema({
+@automation.register_action('output.ledc.melody', MelodyAction, cv.Schema({
     cv.Required(CONF_ID): cv.use_id(LEDCOutput),
     cv.Required(CONF_PATTERN): [validate_pattern_item],
     cv.Optional(CONF_ACTIVE_LEVEL, default='50%'): cv.percentage,
@@ -176,7 +176,7 @@ def ledc_song_to_code(config, action_id, template_arg, args):
     end_at = 0
     for conf in config[CONF_PATTERN]:
         end_at += conf[CONF_DURATION].total_milliseconds
-        items.append(SongActionItem(conf[CONF_FREQUENCY], end_at))
+        items.append(MelodyActionItem(conf[CONF_FREQUENCY], end_at))
     cg.add(var.set_items(items))
 
     yield var
