@@ -67,7 +67,14 @@ bool MiBand4::parse_message(const std::vector<uint8_t> &message, ParseResult &re
     return false;
   }
 
+  static uint32_t last_steps = 0;
   const uint32_t steps = encode_uint32(data[3], data[2], data[1], data[0]);
+
+  if (last_steps == steps) {
+    ESP_LOGVV(TAG, "parse_message(): steps have not changed, skipping (%d).", steps);
+    return false;
+  }
+  last_steps = steps;
   result.steps = steps;
 
   return true;
