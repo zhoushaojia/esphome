@@ -20,9 +20,8 @@ CONF_SET_ACTION = "set_action"
 
 
 def validate_min_max(config):
-    if CONF_MAX_VALUE in config:
-        if config[CONF_MAX_VALUE] <= config[CONF_MIN_VALUE]:
-            raise cv.Invalid("max_value must be greater than min_value")
+    if config[CONF_MAX_VALUE] <= config[CONF_MIN_VALUE]:
+        raise cv.Invalid("max_value must be greater than min_value")
     return config
 
 
@@ -33,12 +32,8 @@ CONFIG_SCHEMA = cv.All(
             cv.Optional(CONF_LAMBDA): cv.returning_lambda,
             cv.Optional(CONF_OPTIMISTIC, default=False): cv.boolean,
             cv.Optional(CONF_SET_ACTION): automation.validate_automation(single=True),
-            cv.Inclusive(
-                CONF_MAX_VALUE, group_of_inclusion="min_max"
-            ): cv.positive_float,
-            cv.Inclusive(
-                CONF_MIN_VALUE, group_of_inclusion="min_max"
-            ): cv.positive_float,
+            cv.Required(CONF_MIN_VALUE): cv.float_,
+            cv.Required(CONF_MAX_VALUE): cv.float_,
             cv.Optional(CONF_STEP): cv.positive_float,
         }
     ).extend(cv.polling_component_schema("60s")),
@@ -49,7 +44,13 @@ CONFIG_SCHEMA = cv.All(
 async def to_code(config):
     var = cg.new_Pvariable(config[CONF_ID])
     await cg.register_component(var, config)
-    await number.register_number(var, config)
+    await number.register_number(
+        var,
+        config,
+        min_value=config[CONF_MIN_VALUE],
+        max_value=config[CONF_MAX_VALUE],
+        step=config.get(CONF_STEP),
+    )
 
     if CONF_LAMBDA in config:
         template_ = await cg.process_lambda(
@@ -62,9 +63,3 @@ async def to_code(config):
         )
 
     cg.add(var.set_optimistic(config[CONF_OPTIMISTIC]))
-
-    if CONF_MIN_VALUE in config:
-        cg.add(var.set_min_value(config[CONF_MIN_VALUE]))
-        cg.add(var.set_max_value(config[CONF_MAX_VALUE]))
-    if CONF_STEP in config:
-        cg.add(var.set_step(config[CONF_STEP]))
