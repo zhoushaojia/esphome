@@ -44,7 +44,6 @@ from esphome.const import (
     DEVICE_CLASS_ENERGY,
     DEVICE_CLASS_HUMIDITY,
     DEVICE_CLASS_ILLUMINANCE,
-    DEVICE_CLASS_MONETARY,
     DEVICE_CLASS_SIGNAL_STRENGTH,
     DEVICE_CLASS_TEMPERATURE,
     DEVICE_CLASS_POWER,
@@ -58,6 +57,7 @@ from esphome.core import CORE, coroutine_with_priority
 from esphome.util import Registry
 
 CODEOWNERS = ["@esphome/core"]
+DEVICE_CLASS_MONETARY = "monetary"
 DEVICE_CLASSES = [
     DEVICE_CLASS_EMPTY,
     DEVICE_CLASS_BATTERY,
